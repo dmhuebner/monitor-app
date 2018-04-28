@@ -1,0 +1,20 @@
+{
+  "name": "monitor-api",
+  "version": "1.0.0",
+  "description": "Node API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmhuebner/monitor-api.git"
+  },
+  "author": "David Huebner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmhuebner/monitor-api/issues"
+  },
+  "homepage": "https://github.com/dmhuebner/monitor-api#readme"
+}
