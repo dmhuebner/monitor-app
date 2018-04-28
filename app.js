@@ -1,8 +1,7 @@
 const http = require('http'),
       url = require('url'),
-      StringDecoder = require('string_decoder').StringDecoder;
-
-const port = 3000;
+      StringDecoder = require('string_decoder').StringDecoder,
+      config = require('./config');
 
 const server = http.createServer((req, res) => {
 
@@ -71,9 +70,9 @@ const server = http.createServer((req, res) => {
   });
 });
 
-// Server is listening
-server.listen(port, () => {
-  console.log(`The server is listening on port ${port}...`);
+// Start the server
+server.listen(config.port, () => {
+  console.log(`The server is listening on port ${config.port} in ${config.envName} environment...`);
 });
 
 function healthCheckCtrl(data, callback) {

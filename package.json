@@ -4,7 +4,8 @@
   "description": "Node API",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
+    "develop": "node app.js",
     "test": "test"
   },
   "repository": {
