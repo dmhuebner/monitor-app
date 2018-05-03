@@ -1,22 +1,49 @@
 const http = require('http'),
+      https = require('https'),
       url = require('url'),
       StringDecoder = require('string_decoder').StringDecoder,
+      fs = require('fs'),
       config = require('./config');
 
-const server = http.createServer((req, res) => {
+// Instantiate http server
+const httpServer = http.createServer((req, res) => {
+  unifiedServer(req, res);
+});
 
+// Start the http server
+httpServer.listen(config.httpPort, () => {
+  console.log(`The http server is listening on port ${config.httpPort} in ${config.envName} environment...`);
+});
+
+// Instantiate https server
+const httpsServerOptions = {
+  key: fs.readFileSync('./https/key.pem'),
+  cert: fs.readFileSync('./https/cert.pem')
+};
+
+const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+  unifiedServer(req, res);
+});
+
+// Start the https server
+httpsServer.listen(config.httpsPort, () => {
+  console.log(`The https server is listening on port ${config.httpsPort} in ${config.envName} environment...`);
+});
+
+// All server logic for both http and https servers
+function unifiedServer(req, res) {
   // Get url and parse it
   const parsedUrl = url.parse(req.url, true);
 
   // Get the path
   const path = parsedUrl.pathname;
-  const trimmedPath = path.replace(/^\/+|\/+$/g, '').toLocaleLowerCase();
+  const trimmedPath = path.replace(/^\/+|\/+$/g, '').toLowerCase();
 
   // Get the query string as an object
   let queryStringObject = parsedUrl.query;
 
   // Get HTTP method
-  const method = req.method.toLocaleLowerCase();
+  const method = req.method.toLowerCase();
 
   // Get request headers as object
   const headers = req.headers;
@@ -68,12 +95,7 @@ const server = http.createServer((req, res) => {
     });
 
   });
-});
-
-// Start the server
-server.listen(config.port, () => {
-  console.log(`The server is listening on port ${config.port} in ${config.envName} environment...`);
-});
+}
 
 function healthCheckCtrl(data, callback) {
   // Callback HTTP status code and payload
