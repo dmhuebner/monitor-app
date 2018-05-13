@@ -97,9 +97,9 @@ function unifiedServer(req, res) {
   });
 }
 
-function healthCheckCtrl(data, callback) {
+function pingCtrl(data, callback) {
   // Callback HTTP status code and payload
-  callback(200, {name: 'health check'});
+  callback(200, {routeName: 'ping'});
 }
 
 function notFoundCtrl(data, callback) {
@@ -108,11 +108,11 @@ function notFoundCtrl(data, callback) {
 
 // Define controllers
 const controllers = {
-  healthCheck: healthCheckCtrl,
+  ping: pingCtrl,
   notFound: notFoundCtrl
 };
 
 // Define request router
 const router = {
-  healthcheck: controllers.healthCheck
+  ping: controllers.ping
 };
