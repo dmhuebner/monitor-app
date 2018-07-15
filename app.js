@@ -3,7 +3,9 @@ const http = require('http'),
       url = require('url'),
       StringDecoder = require('string_decoder').StringDecoder,
       fs = require('fs'),
-      config = require('./config');
+      config = require('./config'),
+      handlers = require('./lib/handlers'),
+      helpers = require('./lib/helpers');
 
 // Instantiate http server
 const httpServer = http.createServer((req, res) => {
@@ -60,26 +62,26 @@ function unifiedServer(req, res) {
     buffer += decoder.end();
 
     // Request is now finished
-    const requestBody = buffer;
+    const requestBody = helpers.parseJsonToObject(buffer);
 
-    // Choose the controller this request should go to. If no controller is found, use not found controller
-    const chosenController = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : controllers.notFound;
+    // Choose the handler this request should go to. If no handler is found, use not found handler
+    const chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound;
 
-    // Construct data object to send to controller
+    // Construct data object to send to handler
     const data = {
       trimmedPath: trimmedPath,
       queryStringObject: queryStringObject,
       method: method,
       headers: headers,
-      requestBody: requestBody
+      payload: requestBody
     };
 
-    // Route request to controller specified in the router
-    chosenController(data, (statusCode, payload) => {
-      // Use statusCode called back by controller or default to 200
+    // Route request to handler specified in the router
+    chosenHandler(data, (statusCode, payload) => {
+      // Use statusCode called back by handler or default to 200
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200;
 
-      // User payload called back by controller or default to empty object
+      // User payload called back by handler or default to empty object
       payload = typeof(payload) === 'object' ? payload : {};
 
       // Convert payload to string
@@ -97,22 +99,8 @@ function unifiedServer(req, res) {
   });
 }
 
-function pingCtrl(data, callback) {
-  // Callback HTTP status code and payload
-  callback(200, {routeName: 'ping'});
-}
-
-function notFoundCtrl(data, callback) {
-  callback(404);
-}
-
-// Define controllers
-const controllers = {
-  ping: pingCtrl,
-  notFound: notFoundCtrl
-};
-
 // Define request router
 const router = {
-  ping: controllers.ping
+  ping: handlers.ping,
+  users: handlers.users
 };
