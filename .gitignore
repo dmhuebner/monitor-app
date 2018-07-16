@@ -69,3 +69,9 @@ https/*
 # .data file database
 .data/*
 !.data/.gitkeep
+!.data/users
+.data/users/*
+!.data/users/.gitkeep
+!.data/tokens
+.data/tokens/*
+!.data/tokens/.gitkeep
