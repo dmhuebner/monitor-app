@@ -12,7 +12,7 @@ environments.test = {
   httpPort: 3000,
   httpsPort: 3001,
   envName: 'test',
-  hashingSecret: 'thisIsASecret',
+  hashingSecret: secrets.env.test.hashingSecret,
   maxChecks: 5,
   twilio: secrets.env.test.twilio
 };
@@ -22,7 +22,7 @@ environments.production = {
   httpPort: 5000,
   httpsPort: 5001,
   envName: 'production',
-  hashingSecret: 'thisIsAlsoASecret',
+  hashingSecret: secrets.env.production.hashingSecret,
   maxChecks: 5,
   twilio: secrets.env.production.twilio
 };
