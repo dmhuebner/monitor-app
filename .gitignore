@@ -75,3 +75,6 @@ https/*
 !.data/tokens
 .data/tokens/*
 !.data/tokens/.gitkeep
+
+# Secrets
+secrets.js
