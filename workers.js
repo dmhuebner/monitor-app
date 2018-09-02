@@ -29,12 +29,12 @@ workers.gatherAllChecks = () => {
             // Pass the data to the check validator, and let that function continue or log errors as needed
             workers.validateCheckData(originalCheckData);
           } else {
-            debug('Error reading one of the check\'s data');
+            debug('\x1b[31m%s\x1b[0m', 'Error reading one of the check\'s data');
           }
         });
       });
     } else {
-      debug('Error: Could not find any checks to process');
+      debug('\x1b[31m%s\x1b[0m', 'Error: Could not find any checks to process');
     }
   });
 };
@@ -65,7 +65,7 @@ workers.validateCheckData = (originalCheckData) => {
 
     workers.performCheck(originalCheckData);
   } else {
-    debug('Error: One of the checks is not properly formatted. Skipping it.');
+    debug('\x1b[31m%s\x1b[0m', 'Error: One of the checks is not properly formatted. Skipping it.');
   }
 };
 
@@ -165,11 +165,12 @@ workers.processCheckOutcome = (originalCheckData, checkOutcome) => {
       if (alertWarranted) {
         workers.alertUsersToStatusChange(newCheckData);
       } else {
-        debug(`${newCheckData.method.toUpperCase()} ${newCheckData.url}\nCheck outcome has not changed. No alert needed`);
+        debug('\x1b[33m%s\x1b[0m', `${newCheckData.method.toUpperCase()} ${newCheckData.url}`);
+        debug('Check outcome has not changed. No alert needed');
       }
 
     } else {
-      debug('Error trying to save updates to one of the checks');
+      debug('\x1b[31m%s\x1b[0m', 'Error trying to save updates to one of the checks');
     }
   });
 };
@@ -179,9 +180,9 @@ workers.alertUsersToStatusChange = (newCheckData) => {
   const message = `Alert: Your monitor for ${newCheckData.method.toUpperCase()} ${newCheckData.protocol}://${newCheckData.url} is currently ${newCheckData.state}`;
   helpers.sendTwilioSms(newCheckData.userPhone, message, (error) => {
     if (!error) {
-      debug('Success! User was alerted to a status change in their check via sms\n', message);
+      debug('\x1b[32m%s\x1b[0m', 'Success! User was alerted to a status change in their check via sms\n', message);
     } else {
-      debug('Error: Could not send an alert to a user who had a state change in one of their checks', error);
+      debug('\x1b[31m%s\x1b[0m', 'Error: Could not send an alert to a user who had a state change in one of their checks', error);
     }
   });
 };
@@ -205,9 +206,9 @@ workers.log = (originalCheckData, checkOutcome, state, alertWarranted, timeOfChe
   // Append the logString to the file
   _logs.append(logFileName, logString, (error) => {
     if (!error) {
-      debug('Logging to file succeeded');
+      debug('\x1b[37m%s\x1b[0m', 'Logging to file succeeded');
     } else {
-      debug('Logging to file failed');
+      debug('\x1b[31m%s\x1b[0m', 'Logging to file failed');
     }
   })
 };
@@ -234,18 +235,18 @@ workers.rotateLogs = () => {
             // Truncate the log
             _logs.truncate(logId, (error) => {
               if (!error) {
-                debug('Success truncating log file');
+                debug('\x1b[37m%s\x1b[0m', 'Success truncating log file');
               } else {
-                debug('Error truncating log file');
+                debug('\x1b[31m%s\x1b[0m', 'Error truncating log file');
               }
             });
           } else {
-            debug('Error compressing one of the log files', error);
+            debug('\x1b[31m%s\x1b[0m', 'Error compressing one of the log files', error);
           }
         });
       });
     } else {
-      debug('Error: Could not find any logs to rotate');
+      debug('\x1b[31m%s\x1b[0m', 'Error: Could not find any logs to rotate');
     }
   });
 
