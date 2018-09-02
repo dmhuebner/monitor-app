@@ -1,3 +1,4 @@
+const secrets = require('./secrets');
 /*
 * Create and export configuration variables
 *
@@ -11,8 +12,9 @@ environments.test = {
   httpPort: 3000,
   httpsPort: 3001,
   envName: 'test',
-  hashingSecret: 'thisIsASecret',
-  maxChecks: 5
+  hashingSecret: secrets.env.test.hashingSecret,
+  maxChecks: 5,
+  twilio: secrets.env.test.twilio
 };
 
 // Production environment
@@ -20,8 +22,9 @@ environments.production = {
   httpPort: 5000,
   httpsPort: 5001,
   envName: 'production',
-  hashingSecret: 'thisIsAlsoASecret',
-  maxChecks: 5
+  hashingSecret: secrets.env.production.hashingSecret,
+  maxChecks: 5,
+  twilio: secrets.env.production.twilio
 };
 
 // Determine which environment was passed as command-line argument
