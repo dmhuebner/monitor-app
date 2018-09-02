@@ -75,6 +75,14 @@ https/*
 !.data/tokens
 .data/tokens/*
 !.data/tokens/.gitkeep
+!.data/checks
+.data/checks/*
+!.data/checks/.gitkeep
+
+# .logs log directory
+
+.logs/*
+!.logs/.gitkeep
 
 # Secrets
 secrets.js
