@@ -61,7 +61,10 @@ server.unifiedServer = (req, res) => {
     const requestBody = helpers.parseJsonToObject(buffer);
 
     // Choose the handler this request should go to. If no handler is found, use not found handler
-    const chosenHandler = typeof(server.router[trimmedPath]) !== 'undefined' ? server.router[trimmedPath] : handlers.notFound;
+    let chosenHandler = typeof(server.router[trimmedPath]) !== 'undefined' ? server.router[trimmedPath] : handlers.notFound;
+
+    // If the request is within the public directory, use the public handler instead
+    chosenHandler = trimmedPath.indexOf('public/') > -1 ? handlers.public : chosenHandler;
 
     // Construct data object to send to handler
     const data = {
@@ -82,13 +85,47 @@ server.unifiedServer = (req, res) => {
       // Return the response parts that are content-specific
       let payloadString = '';
 
+      // contentType is json
       if (contentType === 'json') {
         res.setHeader('Content-Type', 'application/json');
         payload = typeof(payload) === 'object' ? payload : {};
         payloadString = JSON.stringify(payload);
-      } else if (contentType === 'html') {
+      }
+
+      // contentType is html
+      if (contentType === 'html') {
         res.setHeader('Content-Type', 'text/html');
         payloadString = typeof(payload) === 'string' ? payload : '';
+      }
+
+      // contentType is favicon
+      if (contentType === 'favicon') {
+        res.setHeader('Content-Type', 'image/x-icon');
+        payloadString = payload ? payload : '';
+      }
+
+      // contentType is css
+      if (contentType === 'css') {
+        res.setHeader('Content-Type', 'text/css');
+        payloadString = payload ? payload : '';
+      }
+
+      // contentType is png
+      if (contentType === 'png') {
+        res.setHeader('Content-Type', 'image/png');
+        payloadString = payload ? payload : '';
+      }
+
+      // contentType is jpeg
+      if (contentType === 'jpg') {
+        res.setHeader('Content-Type', 'image/jpeg');
+        payloadString = payload ? payload : '';
+      }
+
+      // contentType is plain
+      if (contentType === 'plain') {
+        res.setHeader('Content-Type', 'text/plain');
+        payloadString = payload ? payload : '';
       }
 
       // Return the response parts that are common to all contentTypes
@@ -110,6 +147,8 @@ server.unifiedServer = (req, res) => {
 // Define request router
 server.router = {
   '': handlers.index,
+  'favicon.ico': handlers.favicon,
+  'public': handlers.public,
   'account/create': handlers.accountCreate,
   'account/edit': handlers.accountEdit,
   'account/delete': handlers.accountDelete,
