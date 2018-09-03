@@ -102,10 +102,10 @@ server.unifiedServer = (req, res) => {
 
 // Define request router
 server.router = {
-  ping: handlers.ping,
-  users: handlers.users,
-  tokens: handlers.tokens,
-  checks: handlers.checks
+  'ping': handlers.ping,
+  'api/users': handlers.users,
+  'api/tokens': handlers.tokens,
+  'api/checks': handlers.checks
 };
 
 // Init script
