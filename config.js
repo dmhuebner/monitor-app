@@ -14,7 +14,13 @@ environments.test = {
   envName: 'test',
   hashingSecret: secrets.env.test.hashingSecret,
   maxChecks: 5,
-  twilio: secrets.env.test.twilio
+  twilio: secrets.env.test.twilio,
+  templateGlobals: {
+    appName: 'Uptime Checker',
+    companyName: 'Not A Real Company, Inc.',
+    yearCreated: '2018',
+    baseUrl: 'http://localhost:3000/'
+  }
 };
 
 // Production environment
@@ -24,7 +30,13 @@ environments.production = {
   envName: 'production',
   hashingSecret: secrets.env.production.hashingSecret,
   maxChecks: 5,
-  twilio: secrets.env.production.twilio
+  twilio: secrets.env.production.twilio,
+  templateGlobals: {
+    appName: 'Uptime Checker',
+    companyName: 'Not A Real Company, Inc.',
+    yearCreated: '2018',
+    baseUrl: 'http://localhost:5000/'
+  }
 };
 
 // Determine which environment was passed as command-line argument

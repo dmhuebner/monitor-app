@@ -73,18 +73,25 @@ server.unifiedServer = (req, res) => {
     };
 
     // Route request to handler specified in the router
-    chosenHandler(data, (statusCode, payload) => {
+    chosenHandler(data, (statusCode, payload, contentType) => {
+      // Determine the type of response default to JSON
+      contentType = typeof(contentType) === 'string' ? contentType : 'json';
       // Use statusCode called back by handler or default to 200
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200;
 
-      // User payload called back by handler or default to empty object
-      payload = typeof(payload) === 'object' ? payload : {};
+      // Return the response parts that are content-specific
+      let payloadString = '';
 
-      // Convert payload to string
-      const payloadString = JSON.stringify(payload);
+      if (contentType === 'json') {
+        res.setHeader('Content-Type', 'application/json');
+        payload = typeof(payload) === 'object' ? payload : {};
+        payloadString = JSON.stringify(payload);
+      } else if (contentType === 'html') {
+        res.setHeader('Content-Type', 'text/html');
+        payloadString = typeof(payload) === 'string' ? payload : '';
+      }
 
-      // Return the response
-      res.setHeader('Content-Type', 'application/json');
+      // Return the response parts that are common to all contentTypes
       res.writeHead(statusCode);
       res.end(payloadString);
 
@@ -102,6 +109,15 @@ server.unifiedServer = (req, res) => {
 
 // Define request router
 server.router = {
+  '': handlers.index,
+  'account/create': handlers.accountCreate,
+  'account/edit': handlers.accountEdit,
+  'account/delete': handlers.accountDelete,
+  'session/create': handlers.sessionCreate,
+  'session/delete': handlers.sessionDelete,
+  'checks/all': handlers.checkList,
+  'checks/create': handlers.checksCreate,
+  'checks/edit': handlers.checksEdit,
   'ping': handlers.ping,
   'api/users': handlers.users,
   'api/tokens': handlers.tokens,
