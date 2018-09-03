@@ -23,26 +23,28 @@
   <!-- Header goes here -->
   <header class="header">
     <!-- Logo -->
-    <a href="/" class="logo"></a>
+    <a href="/" class="logo">
+      <img src="public/logo.png" alt="Logo" />
+    </a>
     <!--Navigation goes here-->
     <ul class="menu">
       <li>
         <a href="/">Home</a>
       </li>
       <li>
-        <a class="logged-out" href="/">Signup</a>
+        <a class="logged-out" href="/account/create">Signup</a>
       </li>
       <li>
-        <a class="logged-out" href="/">Login</a>
+        <a class="logged-out" href="/session/create">Login</a>
       </li>
       <li>
-        <a class="logged-in" href="/">Dashboard</a>
+        <a class="logged-in" href="/checks/all">Dashboard</a>
       </li>
       <li>
-        <a class="logged-in" href="/">Account Settings</a>
+        <a class="logged-in" href="/account/edit">Account Settings</a>
       </li>
       <li>
-        <a class="logged-in" href="/">Logout</a>
+        <a class="logged-in" href="#">Logout</a>
       </li>
     </ul>
   </header>
