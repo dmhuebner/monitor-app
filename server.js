@@ -134,7 +134,7 @@ server.unifiedServer = (req, res) => {
 
       // Log the response
       // If the response is 200 or 201 print green otherwise print red
-      if (statusCode === 200 || statusCode === 201) {
+      if (statusCode === 200 || statusCode === 201 || statusCode === 204) {
         debug('\x1b[32m%s\x1b[0m', `${method.toUpperCase()} /${trimmedPath} ${statusCode}`);
       } else {
         debug('\x1b[31m%s\x1b[0m', `${method.toUpperCase()} /${trimmedPath} ${statusCode}`);
@@ -153,7 +153,7 @@ server.router = {
   'account/edit': handlers.accountEdit,
   'account/delete': handlers.accountDelete,
   'session/create': handlers.sessionCreate,
-  'session/delete': handlers.sessionDelete,
+  'session/deleted': handlers.sessionDeleted,
   'checks/all': handlers.checkList,
   'checks/create': handlers.checksCreate,
   'checks/edit': handlers.checksEdit,
