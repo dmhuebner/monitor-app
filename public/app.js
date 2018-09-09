@@ -146,10 +146,10 @@ app.formResponseProcessor = (formId, requestPayload, responsePayload) => {
       if (newStatusCode !== 200) {
 
         // Set the formError field with the error text
-        document.querySelector(`#${formI} .formError`).innerHTML = 'Sorry, an error has occured. Please try again.';
+        document.querySelector(`#${formId} .formError`).innerHTML = 'Sorry, an error has occured. Please try again.';
 
         // Show (unhide) the form error field on the form
-        document.querySelector(`#${formI} .formError`).style.display = 'block';
+        document.querySelector(`#${formId} .formError`).style.display = 'block';
 
       } else {
         // If successful, set the token and redirect the user
