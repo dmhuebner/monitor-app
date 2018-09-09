@@ -3,7 +3,7 @@
 **/
 
 /* Resets */
-* {
+body, p, h1, h2, h3, h4, h5, h6, div, span, header, footer, img, a, a:hover, a:active, a:visited, table, tr, td, th, form, input, button, select, textarea {
     line-height: 100%;
     padding: 0;
     margin: 0;
