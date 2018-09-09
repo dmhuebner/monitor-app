@@ -17,7 +17,7 @@ app.config = {
 app.client = {}
 
 // Interface for making API calls
-app.client.request = function(headers, path, method, queryStringObject, payload, callback) {
+app.client.request = (headers, path, method, queryStringObject, payload, callback) => {
 
   // Validate all params
   headers = headers && typeof(headers) === 'object' ? headers : {};
