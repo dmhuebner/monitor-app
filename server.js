@@ -151,7 +151,7 @@ server.router = {
   'public': handlers.public,
   'account/create': handlers.accountCreate,
   'account/edit': handlers.accountEdit,
-  'account/delete': handlers.accountDelete,
+  'account/deleted': handlers.accountDeleted,
   'session/create': handlers.sessionCreate,
   'session/deleted': handlers.sessionDeleted,
   'checks/all': handlers.checkList,

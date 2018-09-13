@@ -186,7 +186,7 @@ app.bindForms = () => {
         // Call the API
         app.client.request(null, path, method, queryStringObject, payload, (statusCode, responsePayload) => {
           // Display an error on the form if needed
-          if (statusCode !== 200) {
+          if (statusCode !== 200 && statusCode !== 204) {
 
             if (statusCode === 403) {
               // log the user out
