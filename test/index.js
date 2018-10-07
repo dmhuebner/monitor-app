@@ -3,29 +3,16 @@
 ===================*/
 
 const helpers = require('../lib/helpers');
-const assert = require('assert');
 
 // Application logic container for the test runner
 const _app = {};
 
 // Container for tests
-_app.tests = {
-  unit: {}
-};
+_app.tests = {};
 
-/**************************************************************************************
-* ADD TESTS HERE
-***************************************************************************************/
+// Add on unit tests
 
-// Example test
-_app.tests.unit['Example test'] = (done) => {
-  assert.equal(true, true);
-  done();
-};
-
-/**************************************************************************************
-* END OF TESTS
-**************************************************************************************/
+_app.tests.unit = require('./unit');
 
 // Count all the tests
 _app.countTests =() => {
