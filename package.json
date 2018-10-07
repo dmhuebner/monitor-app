@@ -5,8 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
+    "debug": "node inspect --use_strict app.js",
     "develop": "node --use_strict app.js",
-    "test": "node test"
+    "test": "node test",
+    "test-debug": "node inspect test"
   },
   "repository": {
     "type": "git",
